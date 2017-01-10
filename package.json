@@ -1,0 +1,29 @@
+{
+  "name": "attic",
+  "version": "1.0.0",
+  "description": "Build / watch setup for quick & simple prototyping",
+  "main": "index.js",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.6",
+    "node-sass": "^4.2.0",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.0",
+    "spritesh": "^1.2.0"
+  },
+  "scripts": {
+    "build-styles": "node-sass src/styles/main.scss build/main.css",
+    "watch-styles": "nodemon --watch src/styles --ext scss -x \"npm run build-styles\"",
+    "build-icons": "svgo -f src/icons -o build/icons && spritesh --input build/icons --output build/sprite.svg --viewbox \"0 0 240 240\" --prefix icon-",
+    "watch-icons": "nodemon --watch src/icons --ext svg -x \"npm run build-icons\"",
+    "copy-static": "cp -rf src/static/* build/",
+    "watch-static": "nodemon --watch src/static --ext js,css,html -x \"npm run copy-static\"",
+    "preview": "browser-sync start --server build --port 3400 --files build/**",
+    "start": "npm-run-all --parallel watch-styles watch-icons watch-static preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
